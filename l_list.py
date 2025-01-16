@@ -3,7 +3,6 @@ class Node:
         self.data = data
         self.next = None
 
-
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -69,9 +68,6 @@ class LinkedList:
             current = next
         self.head = prev
 
-    def sort_list(self):
-        pass
-
     def append_at_index(self, data, index):
         new_node = Node(data)
         if self.head is None:
@@ -99,8 +95,32 @@ class LinkedList:
         new_node.next = current.next
         current.next = new_node
 
-    def append_at_sort(self, data):
-        pass
+    def simple_sort(self):
+        if self.head is None or self.head.next is None:
+            return
+
+        current = self.head
+        while current:
+            next_node = current.next
+            while next_node:
+                if current.data > next_node.data:
+                    current.data, next_node.data = next_node.data, current.data
+                next_node = next_node.next
+            current = current.next
+
+    def insert_into_sorted(self, data):
+        new_node = Node(data)
+        if self.head is None or self.head.data >= data:
+            new_node.next = self.head
+            self.head = new_node
+            return
+
+        current = self.head
+        while current.next and current.next.data < data:
+            current = current.next
+
+        new_node.next = current.next
+        current.next = new_node
 
     def __str__(self):
         nodes = []
@@ -129,12 +149,29 @@ print("append at index")
 ll.append_at_index(70, 2)
 print(ll)
 
-# Delete by index
 print("\nDelete at index 2:")
-ll.delete_by_index(7)
+ll.delete_by_index(2)
 print(ll)
 
-# Delete by value
 print("\nDelete value 20:")
 ll.delete_by_value(20)
+print(ll)
+
+print("Unsorted List:")
+print(ll)
+
+print("\nSorting the list:")
+ll.simple_sort()
+print(ll)
+
+print("\nInserting 25 into the sorted list:")
+ll.insert_into_sorted(25)
+print(ll)
+
+print("\nInserting 5 into the sorted list:")
+ll.insert_into_sorted(5)
+print(ll)
+
+print("\nInserting 50 into the sorted list:")
+ll.insert_into_sorted(50)
 print(ll)
